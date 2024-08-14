@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 function NavBar() {
     return (
@@ -28,31 +29,14 @@ function NavBar() {
                         <li>
                             <a href="#">Links</a>
                             <ul>
-                                <li><a href="#signin-modal" data-toggle="modal"><i className="icon-user"></i>Login</a></li>
+                                <li>  
+                                     <Link to="/login" target="_self" data-toggle="modal">
+                                     <i className="icon-user"></i>Login/Register
+                                     </Link>
+                                </li>
                             </ul>
                         </li>
                     </ul>
-
-                    <div className="header-dropdown">
-                        <a href="#">USD</a>
-                        <div className="header-menu">
-                            <ul>
-                                <li><a href="#">Eur</a></li>
-                                <li><a href="#">Usd</a></li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <div className="header-dropdown">
-                        <a href="#">Eng</a>
-                        <div className="header-menu">
-                            <ul>
-                                <li><a href="#">English</a></li>
-                                <li><a href="#">French</a></li>
-                                <li><a href="#">Spanish</a></li>
-                            </ul>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
@@ -500,7 +484,7 @@ function NavBar() {
                                         </ul>
                                     </li>
                                     <li><a href="login.html">Login</a></li>
-                                    <li><a href="faq.html">FAQs</a></li>
+                                    <li><Link to='/faq' />FAQs</li>
                                     <li><a href="404.html">Error 404</a></li>
                                     <li><a href="coming-soon.html">Coming Soon</a></li>
                                 </ul>
