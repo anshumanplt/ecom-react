@@ -1,17 +1,35 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from './AuthContext';
 
 const Login = () => {
     const[form, setForm] = useState({email: '', password: ''});
+    const { login } = useAuth();
+    const navigate = useNavigate();
 
-    const handleChange = (e) =>{
+    const handleLoginChange = (e) =>{
         const{ name, value} = e.target;
         setForm({ ...form, [name]:value});
     }
 
-    const handleSubmit = (e) => {
+    const handleLoginSubmit = async(e) => {
         e.preventDefault();
-        console.log(form)
+        console.log(form);
+        const success = await login(form.email, form.password);
+        if (success) {
+          navigate('/'); 
+        }
     }
+
+    const handleRegisterChange = (e) =>{
+      const{ name, value} = e.target;
+      setForm({ ...form, [name]:value});
+  }
+
+  const handleRegisterSubmit = (e) => {
+    e.preventDefault();
+    console.log(form);
+}
   return (
     <>
       <div className="modal fade" id="signin-modal" tabIndex="-1" role="dialog" aria-hidden="true">
@@ -38,15 +56,15 @@ const Login = () => {
                   </ul>
                   <div className="tab-content" id="tab-content-5">
                     <div className="tab-pane fade show active" id="signin" role="tabpanel" aria-labelledby="signin-tab">
-                      <form action="#" onSubmit={handleChange}>
+                      <form action="#" onSubmit={handleLoginSubmit}>
                         <div className="form-group">
                           <label htmlFor="signin-email">Username or email address *</label>
-                          <input type="text" className="form-control" id="signin-email" name="signin-email" required />
+                          <input type="text" className="form-control" id="email" name="email" onChange={handleLoginChange} required />
                         </div>
 
                         <div className="form-group">
                           <label htmlFor="signin-password">Password *</label>
-                          <input type="password" className="form-control" id="signin-password" name="signin-password" required />
+                          <input type="password" className="form-control" id="password" name="password" onChange={handleLoginChange} required />
                         </div>
 
                         <div className="form-footer">
@@ -82,15 +100,15 @@ const Login = () => {
                       </div>
                     </div>
                     <div className="tab-pane fade" id="register" role="tabpanel" aria-labelledby="register-tab">
-                      <form action="#">
+                      <form onSubmit={handleRegisterSubmit}>
                         <div className="form-group">
                           <label htmlFor="register-email">Your email address *</label>
-                          <input type="email" className="form-control" id="register-email" name="register-email" required />
+                          <input type="email" className="form-control" id="register-email" name="register-email" onChange={handleRegisterChange} required />
                         </div>
 
                         <div className="form-group">
                           <label htmlFor="register-password">Password *</label>
-                          <input type="password" className="form-control" id="register-password" name="register-password" required />
+                          <input type="password" className="form-control" id="register-password" name="register-password" onChange={handleRegisterChange} required />
                         </div>
 
                         <div className="form-footer">
