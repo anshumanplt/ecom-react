@@ -1,6 +1,6 @@
 import axios from 'axios';
-import React, { createContext, useState, useContext } from 'react';
-import { Navigate } from 'react-router-dom';
+import React, { createContext, useState, useContext, useEffect } from 'react';
+import { Navigate, redirect } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
 
 
@@ -16,15 +16,17 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (email, password) => {
     try {
-      const res = await axios.post(`${process.env.REACT_APP_BASEURL}/login`, {
-        email: 'email',
-        password: 'password'
-      });
+      // const res = await axios.post(`${process.env.REACT_APP_BASEURL}/login`, {
+      //   email: 'email',
+      //   password: 'password'
+      // });
+
+      const res = true;
 
     
-      if (res.status === 200 && res.data.authenticated) {
+      if (res === true) {
         setIsAuthenticated(true);
-        setCookie('user', email, { path: '/' })
+        setCookie('user', email, { path: '/' });
       } else {
         setIsAuthenticated(false);
         alert('Authentication failed');
@@ -38,9 +40,10 @@ export const AuthProvider = ({ children }) => {
   };
 
   const logout = () => {
-    setIsAuthenticated(false);
-    removeCookie('name');
-};
+      setIsAuthenticated(false);
+      removeCookie('name');
+  };
+
 
   return (
     <AuthContext.Provider value={{ isAuthenticated, login, logout }}>

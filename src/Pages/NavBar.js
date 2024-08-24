@@ -1,7 +1,30 @@
-import React from 'react';
+import React, { createContext, useState } from 'react';
+import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { useAuth } from './Authentication/AuthContext';
+const AuthContext = createContext();
+
+
 
 function NavBar() {
+    const[authenticated, setAuthenticated] = useState('false');
+    const { isAuthenticated,setIsAuthenticated } = useAuth();
+    const { logout } = useAuth();
+    console.log(isAuthenticated);
+    
+    if (AuthContext?.email) {
+        setAuthenticated(true);
+    }
+    logout();
+
+    const handleClick = () =>{
+        const resp = logout();
+        if (resp === true) {
+            setAuthenticated(false);
+        }
+    }
+
+    
     return (
         <div className="page-wrapper">
         <header className="header header-6">
@@ -30,9 +53,12 @@ function NavBar() {
                             <a href="#">Links</a>
                             <ul>
                                 <li>  
-                                     <Link to="/login" target="_self" data-toggle="modal">
-                                     <i className="icon-user"></i>Login/Register
+                                     {isAuthenticated ? <Link to="/login" target="_self" data-toggle="modal" onClick={handleClick}>
+                                        <i className="icon-user"></i>Logout
                                      </Link>
+                                     :<Link to="/login" target="_self" data-toggle="modal">
+                                     <i className="icon-user"></i>Login/Register
+                                     </Link>}
                                 </li>
                             </ul>
                         </li>
@@ -55,9 +81,9 @@ function NavBar() {
                     </div>
                 </div>
                 <div className="header-center">
-                    <a href="index.html" className="logo">
+                <Link to="/" className="logo">
                         <img src="assets/images/demos/demo-6/logo.png" alt="Molla Logo" width="82" height="20" />
-                    </a>
+                    </Link>
                 </div>
 
                 <div className="header-right">
